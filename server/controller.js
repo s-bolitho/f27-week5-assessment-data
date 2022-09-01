@@ -50,6 +50,20 @@ module.exports = {
             res.status(400).send('Error in getCities')
         })
     },
+    deleteCity: (req, res) => {
+        const id = req.params.id
+
+        sequelize.query(`
+            DELETE FROM cities WHERE city_id = ${id};
+        `)
+        .then((dbRes) => {
+            res.status(200).send(dbRes[0])
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(400).send('Error in deleteCity')
+        })
+    },
     
     seed: (req, res) => {
         sequelize.query(`
