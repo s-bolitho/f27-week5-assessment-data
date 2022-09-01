@@ -16,13 +16,26 @@ module.exports = {
         sequelize.query(`
             SELECT * FROM countries;
         `)
-        .then((response) => {
-            const returnData = response[0]
-            res.status(200).send(returnData)
+        .then((dbRes) => {
+            res.status(200).send(dbRes[0])
         })
         .catch((err) => {
             console.log(err)
-            res.status(400).send('Error')
+            res.status(400).send('Error in getCountries')
+        })
+    },
+    createCity: (req, res) => {
+        const {name, rating, countryId} = req.body
+        sequelize.query(`
+            INSERT INTO cities (name, rating, country_id)
+            VALUES ('${name}', ${rating}, ${countryId})
+        `)
+        .then((dbRes) => {
+            res.status(200).send(dbRes[0])
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(400).send('Error in createCity')
         })
     },
     
